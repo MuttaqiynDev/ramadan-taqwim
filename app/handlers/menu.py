@@ -171,12 +171,12 @@ async def menu_full_calendar(
         text_lines.append(f"{row.d.isoformat()} | {row.suhoor:<8} | {row.iftar}")
     text_lines.append("</pre>")
     
-    await m.answer("\n".join(text_lines))
+    await m.answer("\n".join(text_lines)'\n@MuttaqiynDevbot')
 
     img_bytes = render_calendar_image(f"Ramazon taqvimi — {reg.title}", rows)
     photo = BufferedInputFile(img_bytes, filename="ramazon-taqvim.png")
 
     await m.answer_photo(
         photo=photo,
-        caption=f"📍 Viloyat: <b>{reg.title}</b>\n🗓 To'liq taqvim ({start.isoformat()} dan {rows[-1].d.isoformat()} gacha)",
+        caption=f"📍 Viloyat: <b>{reg.title}</b>\n🗓 To'liq taqvim ({start.isoformat()} dan {rows[-1].d.isoformat()} gacha)\n@MuttaqiynDevbot"
     )
