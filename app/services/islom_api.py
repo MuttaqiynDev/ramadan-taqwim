@@ -7,8 +7,6 @@ import aiohttp
 class IslomApiConfig:
     base_url: str = "https://islomapi.uz"
 
-# app/services/islom_api.py
-
 class IslomApiError(RuntimeError):
     pass
 
@@ -16,7 +14,6 @@ async def _read_json_or_text(resp):
     ct = (resp.headers.get("Content-Type") or "").lower()
     text = await resp.text()
 
-    # JSON bo‘lsa parse qilib ko‘ramiz
     if "application/json" in ct:
         try:
             import json
@@ -63,22 +60,18 @@ class IslomApiClient:
         return data
 
     async def monthly_raw(self, region_api: str, month: int) -> list[dict]:
-        """
-        islomapi oy parametri ba'zan 0-based bo'ladi.
-        Shuning uchun bo'sh list qaytsa month-1 bilan qayta urinib ko'ramiz.
-        """
         url = f"{self.cfg.base_url}/api/monthly"
 
         async def fetch(m: int) -> list[dict]:
             data = await self._get_json(url, {"region": region_api, "month": str(m)})
             if not isinstance(data, list):
                 raise IslomApiError(f"monthly: expected JSON array, got {type(data).__name__}")
-            # dict bo'lmaganlarni olib tashlaymiz
+
             return [x for x in data if isinstance(x, dict)]
 
         out = await fetch(month)
 
-        # ✅ Asosiy fix: agar bo'sh bo'lsa 0-based variantni sinash
+        
         if not out and month > 0:
             out = await fetch(month - 1)
 
@@ -97,11 +90,9 @@ class IslomApiClient:
         raw_list = await self.monthly_raw(region_api, d.month)
         target = d.isoformat()  # YYYY-MM-DD
 
-        # 1) avval date match qilamiz (date yoki day)
         candidates: list[dict] = []
 
         for item in raw_list:
-            # ba'zida "date" bo‘ladi, ba'zida "day" bo‘ladi
             d_str = str(item.get("date", ""))[:10]
             if d_str == target:
                 candidates.append(item)
@@ -116,10 +107,8 @@ class IslomApiClient:
                 continue
 
         if not candidates:
-            # hech bo'lmasa 1 ta itemdan times olishga urinib ko‘ramiz
             candidates = raw_list
 
-        # 2) times formatlari: times dict bo'lishi mumkin yoki to'g'ridan-to'g'ri item ichida bo'lishi mumkin
         def pick_times(item: dict) -> tuple[str | None, str | None]:
             times = item.get("times")
             if isinstance(times, dict):
@@ -127,7 +116,6 @@ class IslomApiClient:
                 iftar = times.get("shom_iftor") or times.get("iftor") or times.get("iftar")
                 return suhoor, iftar
 
-            # fallback: root ichidan qidirish
             suhoor = item.get("tong_saharlik") or item.get("saharlik") or item.get("suhoor")
             iftar = item.get("shom_iftor") or item.get("iftor") or item.get("iftar")
             return suhoor, iftar

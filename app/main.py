@@ -36,7 +36,6 @@ async def main():
 
     dp = Dispatcher()
 
-    # ✅ dependencies (workflow_data)
     dp["cfg"] = cfg
     dp["db"] = db
     dp["users_repo"] = UsersRepo(db)

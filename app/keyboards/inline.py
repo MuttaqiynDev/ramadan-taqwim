@@ -11,5 +11,5 @@ def regions_grid_kb() -> InlineKeyboardMarkup:
     b = InlineKeyboardBuilder()
     for r in REGIONS:
         b.button(text=r.title, callback_data=f"region:set:{r.code}")
-    b.adjust(2)  # 2 ustun (2 qator list ko‘rinishida)
+    b.adjust(2)
     return b.as_markup()

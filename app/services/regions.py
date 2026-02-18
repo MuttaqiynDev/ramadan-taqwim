@@ -2,9 +2,9 @@ from dataclasses import dataclass
 
 @dataclass(frozen=True)
 class Region:
-    code: str        # internal
-    title: str       # UI
-    api_name: str    # islomapi.uz uchun
+    code: str
+    title: str
+    api_name: str
 
 
 REGIONS: list[Region] = [
@@ -23,7 +23,6 @@ REGIONS: list[Region] = [
     Region("Qoraqalpog‘iston", "Qoraqalpog‘iston", "Nukus"),
 ]
 
-# Backward compatibility map if needed
 REGION_MAP = {r.title: r.api_name for r in REGIONS}
 
 def get_region_by_code(code: str) -> Region | None:

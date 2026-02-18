@@ -11,7 +11,6 @@ class DayRow:
     iftar: str
 
 def render_calendar_image(title: str, rows: list[DayRow]) -> bytes:
-    # Minimalistik jadval rasm
     W = 900
     row_h = 36
     pad = 24
@@ -22,7 +21,6 @@ def render_calendar_image(title: str, rows: list[DayRow]) -> bytes:
     img = Image.new("RGB", (W, H), "white")
     dr = ImageDraw.Draw(img)
 
-    # Default fontlar (serverda bo‘lmasa ham ishlaydi)
     try:
         font_title = ImageFont.truetype("DejaVuSans.ttf", 26)
         font = ImageFont.truetype("DejaVuSans.ttf", 18)

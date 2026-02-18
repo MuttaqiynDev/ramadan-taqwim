@@ -7,10 +7,6 @@ except Exception:
 
 
 def _get_tz(tz_name: str):
-    """
-    Windows/Python 3.13 da tzdata bo‘lmasa ZoneInfo topilmaydi.
-    Shunda UTC+5 fallback (Toshkent vaqti).
-    """
     if ZoneInfo is None:
         return timezone(timedelta(hours=5))
     try:
