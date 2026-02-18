@@ -10,7 +10,8 @@ from app.services.dua import SUHOOR_DUA, IFTAR_DUA
 from app.services.islom_api import IslomApiError
 from app.services.formatters import fmt_day
 from app.services.calendar_image import DayRow, render_calendar_image
-
+from aiogram.enums import ParseMode
+from aiogram.types import BufferedInputFile
 from app.db.repo_users import UsersRepo
 from app.db.repo_cache import CacheRepo
 from app.services.islom_api import IslomApiClient
@@ -171,12 +172,22 @@ async def menu_full_calendar(
         text_lines.append(f"{row.d.isoformat()} | {row.suhoor:<8} | {row.iftar}")
     text_lines.append("</pre>")
     
-    await m.answer("\n".join(text_lines)'\n@MuttaqiynDevbot')
+    await m.answer("\n".join(text_lines) + "\n\n@MuttaqiynDevbot")
+
 
     img_bytes = render_calendar_image(f"Ramazon taqvimi — {reg.title}", rows)
     photo = BufferedInputFile(img_bytes, filename="ramazon-taqvim.png")
 
+    end_date = rows[-1].d.isoformat() if rows else start.isoformat()
+
+    caption = (
+        f"📍 Viloyat: <b>{reg.title}</b>\n"
+        f"🗓 To'liq taqvim ({start.isoformat()} dan {end_date} gacha)\n"
+        f"\n@MuttaqiynDevbot"
+    )
+
     await m.answer_photo(
         photo=photo,
-        caption=f"📍 Viloyat: <b>{reg.title}</b>\n🗓 To'liq taqvim ({start.isoformat()} dan {rows[-1].d.isoformat()} gacha)\n@MuttaqiynDevbot"
+        caption=caption,
+        parse_mode=ParseMode.HTML,
     )
