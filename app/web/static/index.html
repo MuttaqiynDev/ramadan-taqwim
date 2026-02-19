@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>MuttaqiynDev — Ramazon Taqvimi</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+    <!-- Loading State -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-spinner"></div>
+        <p>Yuklanmoqda...</p>
+    </div>
+
+    <!-- Error State -->
+    <div id="error-screen" class="error-screen hidden">
+        <div class="error-icon">⚠️</div>
+        <p id="error-message">Xatolik yuz berdi</p>
+        <button onclick="location.reload()" class="retry-btn">Qayta urinish</button>
+    </div>
+
+    <!-- Main App -->
+    <div id="app" class="app hidden">
+        <!-- ===== BUGUN TAB ===== -->
+        <div id="tab-bugun" class="tab-content active">
+            <!-- Green Header -->
+            <div class="header-block">
+                <div class="header-body">
+                    <!-- Left: timeline with dots + info -->
+                    <div class="header-left">
+                        <div class="timeline-track">
+                            <div class="tl-item">
+                                <div class="tl-dot"></div>
+                                <div class="tl-content">
+                                    <span class="greg-date" id="greg-date">Payshanba, 19 Fev</span>
+                                    <span class="hijri-date" id="hijri-date">1 Ramazon, 1447</span>
+                                </div>
+                            </div>
+                            <div class="tl-item">
+                                <div class="tl-dot"></div>
+                                <div class="tl-content">
+                                    <div class="region-pill" id="region-pill">Andijon viloyati</div>
+                                </div>
+                            </div>
+                            <div class="tl-item">
+                                <div class="tl-dot"></div>
+                                <div class="tl-content">
+                                    <div class="reminder-row" id="reminder-toggle">
+                                        <span>Eslatish</span>
+                                        <svg class="bell-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+                                            <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: countdown circle -->
+                    <div class="header-right">
+                        <div class="countdown-widget">
+                            <svg class="countdown-ring" viewBox="0 0 120 120">
+                                <circle class="ring-track" cx="60" cy="60" r="52" />
+                                <circle class="ring-progress" id="ring-progress" cx="60" cy="60" r="52" />
+                                <!-- Small notch at top -->
+                                <circle class="ring-notch" cx="60" cy="8" r="4" />
+                            </svg>
+                            <div class="countdown-text">
+                                <span class="event-label" id="event-label">Iftor</span>
+                                <span class="event-time" id="event-time">17:56</span>
+                            </div>
+                        </div>
+                        <div class="remaining-time" id="remaining-time">- 03:35:45</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Duas Card (seamless below header) -->
+            <div class="duas-card">
+                <div class="dua-section">
+                    <h2 class="dua-title">Saharlik Duosi</h2>
+                    <p class="dua-arabic" id="saharlik-arabic"></p>
+                    <p class="dua-reading" id="saharlik-reading"></p>
+                </div>
+
+                <div class="dua-section">
+                    <h2 class="dua-title">Iftorlik Duosi</h2>
+                    <p class="dua-arabic" id="iftorlik-arabic"></p>
+                    <p class="dua-reading" id="iftorlik-reading"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== OYLIK TAB ===== -->
+        <div id="tab-oylik" class="tab-content">
+            <div class="monthly-screen">
+                <h2 class="monthly-title">To'liq Taqvim</h2>
+                <div class="calendar-container" id="calendar-container">
+                    <div class="calendar-loading">
+                        <div class="loading-spinner small"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Tabs -->
+        <div class="bottom-tabs">
+            <button class="tab-btn active" data-tab="bugun" id="btn-bugun">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <polyline points="12 6 12 12 16 14"/>
+                </svg>
+                <span>Bugun</span>
+            </button>
+            <button class="tab-btn" data-tab="oylik" id="btn-oylik">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                    <line x1="16" y1="2" x2="16" y2="6"/>
+                    <line x1="8" y1="2" x2="8" y2="6"/>
+                    <line x1="3" y1="10" x2="21" y2="10"/>
+                </svg>
+                <span>Oylik</span>
+            </button>
+        </div>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>

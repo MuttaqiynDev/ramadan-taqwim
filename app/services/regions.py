@@ -9,7 +9,7 @@ class Region:
 
 REGIONS: list[Region] = [
     Region("Toshkent", "Toshkent", "Toshkent"),
-    Region("Andijon", "Andijon", "Andijon"),
+    Region("Andijan", "Andijan", "Andijan"),
     Region("Buxoro", "Buxoro", "Buxoro"),
     Region("Farg‘ona", "Farg'ona", "Farg'ona"),
     Region("Jizzax", "Jizzax", "Jizzax"),

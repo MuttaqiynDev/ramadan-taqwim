@@ -14,3 +14,7 @@ class Config:
     ramadan_days: int = int(os.getenv("RAMADAN_DAYS", "30"))
 
     proxy_url: str | None = os.getenv("PROXY_URL")
+
+    webapp_url: str = os.getenv("WEBAPP_URL", "http://localhost:8000/webapp")
+    base_url: str = os.getenv("BASE_URL", "http://localhost:8000")
+    webapp_port: int = int(os.getenv("WEBAPP_PORT", "8000"))
